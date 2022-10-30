@@ -1,5 +1,4 @@
 package com.employees.employeessystem.models.entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,8 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
- * @author sebastian
- * Entity con todos sus campos para los empleados
+ * @autor Sebastian Londoño
+ * Entity para la tabla employees con sus respectivas columnas
  */
 
 @Entity
@@ -56,11 +55,16 @@ public class Employee {
     @Column(name = "state")
     private String state;
 
+    //Columna de fecha y hora de registro con formato
     @Column(name = "create_at")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime createAt;
 
+    /**
+     * PrePersist para registrar fecha y hora de registro con formato deseado
+     * Junto con el estado del empleado que siempre será activo
+     */
     @PrePersist
     public void prePersistCreateDateAndState() {
         Date date = new Date();
@@ -70,6 +74,10 @@ public class Employee {
 
         this.state = "Activo";
     }
+
+    /**
+     * Getters and Setters
+     */
 
     public Long getId() {
         return id;

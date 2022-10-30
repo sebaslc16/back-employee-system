@@ -11,6 +11,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @autor Sebastian Londoño
+ * Implmentacion de los servicios con el repository
+ */
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -44,14 +48,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findEmployeeByEmail(email);
     }
 
+    /**
+     * Validación del email del empleado cuando se intenta registrar uno que ya existe
+     * @param employee
+     * @return string con el nuevo email del empleado
+     */
     @Override
     public String validateEmailRepeat(Employee employee) {
 
+        // Secuencial para mantener unicidad del email
         int idSecuencialEmail = 1;
         String dominioEmail = "";
         String newEmailEmployee = "";
         Optional<Employee> employeeEmailValidation;
 
+        // Validar dominio del email del empleado
         if(employee.getCountryJob().equals("Colombia")){
             dominioEmail = "cidenet.com.co";
         }
@@ -59,6 +70,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             dominioEmail = "cidenet.com.us";
         }
 
+        /**
+         * do while para generar de nuevo el email del empleado hasta que se conserve la unicidad de este
+         */
         do{
             newEmailEmployee = employee.getFisrtName().toLowerCase()+"."+employee.getFirstLastName().toLowerCase()+"."+idSecuencialEmail+"@"+dominioEmail;
             employeeEmailValidation = findByEmail(newEmailEmployee);

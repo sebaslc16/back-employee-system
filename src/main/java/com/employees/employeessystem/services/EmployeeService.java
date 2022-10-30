@@ -5,6 +5,11 @@ import com.employees.employeessystem.models.entity.Employee;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @autor Sebastian Londoño
+ * Interface con los diferentes servicios a ultilizar
+ */
+
 public interface EmployeeService {
     public Iterable<Employee> findAll();
 
